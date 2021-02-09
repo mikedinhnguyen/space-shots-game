@@ -1,15 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class Settings : MonoBehaviour
 {
-
     public AudioMixer audioMixer;
 
-    public void SetVolume(float volume)
+    public void SetMasterVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume);
+    }
+
+    public void SetMusicVolume(float musicVolume)
+    {
+        audioMixer.SetFloat("musicVolume", musicVolume);
+    }
+
+    public void SetSFXVolume(float SFXVolume)
+    {
+        audioMixer.SetFloat("SFXVolume", SFXVolume);
     }
 }

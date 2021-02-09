@@ -11,9 +11,21 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Bounds"))
         {
             Destroy(gameObject);
-        } else
+        }
+        else if (collision.gameObject.ToString() == "Bullet")
         {
-            ScoreKeeper.score += 10;
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+            Instantiate(explodeEffect, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            ScoreKeeper.score -= 1;
             ScoreKeeper.scoreChange = true;
             Destroy(collision.gameObject);
             Destroy(gameObject);

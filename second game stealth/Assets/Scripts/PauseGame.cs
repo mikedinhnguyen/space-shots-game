@@ -8,10 +8,11 @@ public class PauseGame : MonoBehaviour
     public static bool pauseBool = false;
 
     public GameObject pauseMenuUI;
+    public GameObject startScreen;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !startScreen.activeSelf)
         {
             if (pauseBool)
             {
@@ -25,6 +26,7 @@ public class PauseGame : MonoBehaviour
 
     void Pause()
     {
+        Shooting.canShoot = false;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         pauseBool = true;
@@ -32,6 +34,7 @@ public class PauseGame : MonoBehaviour
 
     public void Resume()
     {
+        Shooting.canShoot = true;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         pauseBool = false;
@@ -39,6 +42,7 @@ public class PauseGame : MonoBehaviour
 
     public void GoToMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 

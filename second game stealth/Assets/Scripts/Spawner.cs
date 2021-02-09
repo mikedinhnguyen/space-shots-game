@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -8,13 +7,14 @@ public class Spawner : MonoBehaviour
     public GameObject[] enemies;
     public float waitTime;
     public GameObject target;
+    public static bool isSpawning;
 
     // Start is called before the first frame update
     void Start()
     {
+        isSpawning = true;
         spawn_points = GameObject.FindGameObjectsWithTag("EnemySpawn");
         target = GameObject.FindGameObjectWithTag("Player");
-        FindObjectOfType<AudioPlayer>().PlaySound("Theme");
         StartCoroutine(SpawnEnemy());
     }
 
@@ -22,7 +22,7 @@ public class Spawner : MonoBehaviour
     {
         Transform spawnPos = spawn_points[Random.Range(0, spawn_points.Length)].transform;
 
-        if (target == null)
+        if (target == null || !isSpawning)
         {
             yield break;
         }

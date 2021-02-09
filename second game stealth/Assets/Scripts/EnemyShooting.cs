@@ -1,21 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class EnemyShooting : MonoBehaviour
 {
     public Transform bulletPoint;
     public GameObject bulletPreFab;
-    public AudioSource bulletSound;
 
     public float bulletForce;
-    public static bool canShoot;
-    
-    void Update()
+
+    void Start()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot)
-        {
-            Shoot();
-            bulletSound.Play();
-        }
+        StartCoroutine(Shooting());
+    }
+
+    IEnumerator Shooting()
+    {
+        yield return new WaitForSeconds(1);
+        Shoot();
     }
 
     void Shoot()
@@ -23,10 +25,5 @@ public class Shooting : MonoBehaviour
         GameObject bullet = Instantiate(bulletPreFab, bulletPoint.position, bulletPoint.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(bulletPoint.up * bulletForce, ForceMode2D.Impulse);
-    }
-
-    public void canShootFunction()
-    {
-        canShoot = true;
     }
 }
