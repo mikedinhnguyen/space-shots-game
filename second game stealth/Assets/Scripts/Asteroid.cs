@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class Asteroid : MonoBehaviour
 {
     public Transform target;
-    public Transform enemyDir;
-    public float moveSpeed;
+    public Transform asteroidDir;
     private Rigidbody2D rb;
 
-    // Start is called before the first frame update
+    public float asteroidForce;
+    
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -33,13 +33,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (target != null)
         {
-            //MoveEnemy();
-            rb.AddForce(enemyDir.up * moveSpeed * Time.deltaTime, ForceMode2D.Impulse);
+            rb.AddForce(asteroidDir.up * asteroidForce * Time.deltaTime, ForceMode2D.Impulse);
         }
-    }
-
-    void MoveEnemy()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.fixedDeltaTime);
     }
 }

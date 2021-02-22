@@ -7,11 +7,13 @@ TagManager:
   - EnemySpawn
   - Bounds
   - Enemy
+  - Bullet
+  - ForceField
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - CameraLayer
   - Water
   - UI
   - 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +7,15 @@ public class PauseGame : MonoBehaviour
 
     public GameObject pauseMenuUI;
     public GameObject startScreen;
+    public GameObject gameOverScreen;
+    public GameObject endScreen;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !startScreen.activeSelf)
+        if (Input.GetKeyDown(KeyCode.Escape) 
+            && !startScreen.activeSelf
+            && !gameOverScreen.activeSelf
+            && !endScreen.activeSelf)
         {
             if (pauseBool)
             {

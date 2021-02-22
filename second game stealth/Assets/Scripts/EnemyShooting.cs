@@ -1,23 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyShooting : MonoBehaviour
 {
+    public Transform target;
     public Transform bulletPoint;
     public GameObject bulletPreFab;
 
     public float bulletForce;
+    public float fireRate;
 
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         StartCoroutine(Shooting());
     }
 
     IEnumerator Shooting()
     {
-        yield return new WaitForSeconds(1);
-        Shoot();
+        if (target != null)
+        {
+            yield return new WaitForSeconds(fireRate);
+            Shoot();
+            StartCoroutine(Shooting());
+        } else { }
     }
 
     void Shoot()

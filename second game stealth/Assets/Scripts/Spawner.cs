@@ -18,6 +18,23 @@ public class Spawner : MonoBehaviour
         StartCoroutine(SpawnEnemy());
     }
 
+    void Update()
+    {
+        if (!isSpawning)
+        {
+            GameObject[] remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject[] remainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
+            foreach (GameObject enemy in remainingEnemies)
+            {
+                Destroy(enemy);
+            }
+            foreach (GameObject bullet in remainingBullets)
+            {
+                Destroy(bullet);
+            }
+        }
+    }
+
     IEnumerator SpawnEnemy()
     {
         Transform spawnPos = spawn_points[Random.Range(0, spawn_points.Length)].transform;

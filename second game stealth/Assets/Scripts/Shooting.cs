@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Shooting : MonoBehaviour
@@ -7,14 +8,17 @@ public class Shooting : MonoBehaviour
     public AudioSource bulletSound;
 
     public float bulletForce;
+    float fireRate = 0.2f;
+    float fireRatePointer;
     public static bool canShoot;
     
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot)
+        if (Input.GetButton("Fire1") && canShoot && Time.time > fireRatePointer)
         {
             Shoot();
             bulletSound.Play();
+            fireRatePointer = Time.time + fireRate;
         }
     }
 
@@ -25,7 +29,7 @@ public class Shooting : MonoBehaviour
         rb.AddForce(bulletPoint.up * bulletForce, ForceMode2D.Impulse);
     }
 
-    public void canShootFunction()
+    public void CanShootFunction()
     {
         canShoot = true;
     }

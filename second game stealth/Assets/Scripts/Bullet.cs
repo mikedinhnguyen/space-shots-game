@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -8,28 +7,47 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bounds"))
+        if (collision.gameObject.CompareTag("Bullet"))
         {
             Destroy(gameObject);
         }
-        else if (collision.gameObject.ToString() == "Bullet")
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.gameObject);
+            Health playerHealth = collision.gameObject.GetComponent<Health>();
+            playerHealth.TakeDamage(1);
+            if (playerHealth.isDepleted)
+            {
+                DestroyPlayer destroyer = GameObject.Find("Player").GetComponent<DestroyPlayer>();
+                destroyer.DestroySelf(collision);
+            }
             Destroy(gameObject);
         }
-        else if (collision.gameObject.CompareTag("Player"))
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
+            Health enemyHealth = collision.gameObject.GetComponent<Health>();
+            enemyHealth.TakeDamage(1);
+            if (enemyHealth.isDepleted)
+            {
+                ScoreKeeper.score -= 1;
+                ScoreKeeper.scoreChange = true;
+                Destroy(collision.gameObject);
+                GameObject explode = Instantiate(explodeEffect, transform.position, Quaternion.identity);
+                StartCoroutine(Wait(explode));
+            }
             Destroy(gameObject);
-            Instantiate(explodeEffect, transform.position, Quaternion.identity);
-        }
-        else
+        } else
         {
-            ScoreKeeper.score -= 1;
-            ScoreKeeper.scoreChange = true;
-            Destroy(collision.gameObject);
             Destroy(gameObject);
-            Instantiate(explodeEffect, transform.position, Quaternion.identity);
         }
+    }
+
+    IEnumerator Wait(GameObject explode)
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(explode);
     }
 }
